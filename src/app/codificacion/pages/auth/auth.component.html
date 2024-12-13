@@ -1,0 +1,39 @@
+<div class="card-container">
+    <p-card header="SISTEMA DE CODIFICACIÓN" [style]="{width: '360px'}" styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+            <div style="padding: 15px;">
+                <img alt="Card" src="assets/showcase/images/usercard.png">
+            </div>
+        </ng-template>
+
+        <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+            <div class="p-fluid grid formgrid">
+                <div class="field col-12 md:col-12">
+                    <label for="username">USUARIO</label>
+                    <input id="username" type="text" pInputText formControlName="username">
+                    <div *ngIf="authForm.get('username').invalid && authForm.get('username').touched">
+                        <small class="p-error">El usuario es requerido.</small>
+                    </div>
+                </div>
+
+                <div class="field col-12 md:col-12">
+                    <label for="password">CONTRASEÑA</label>
+                    <input id="password" type="password" pInputText formControlName="password">
+                    <div *ngIf="authForm.get('password').invalid && authForm.get('password').touched">
+                        <small class="p-error">La contraseña es requerida.</small>
+                    </div>
+                </div>
+
+                <div class="field col-12 md:col-12">
+                    <p-button type="submit" label="INGRESAR" icon="pi pi-check" [disabled]="authForm.invalid"></p-button>
+                </div>
+            </div>
+        </form>
+
+        <ng-template pTemplate="footer">
+            <span class="text-600 font-medium line-height-3">INE |</span>
+            <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Censo Agropecuario 2025</a>
+        </ng-template>
+    </p-card>
+</div>
+<p-toast></p-toast>

@@ -1,0 +1,83 @@
+<div class="card">
+
+    <h4>Variables para codificación</h4>
+    <hr>
+    Departamento:
+    <p-dropdown [disabled]="tabla_pb" (onChange)="registrosTabla()" [options]="departamento" [(ngModel)]="selectedDepartamento" optionLabel="depto"></p-dropdown>
+
+
+    <button [disabled]="tabla_pb" pButton pRipple label="Actualizar" icon="pi pi-refresh" class="p-button-warning ml-2"
+        pTooltip="Actualizar carga" placeholder="Right" (click)="registrosTabla()"></button>
+
+
+
+    <br> <br>
+
+    <p-progressBar *ngIf="tabla_pb" mode="indeterminate" [style]="{'height': '2px'}"></p-progressBar>
+
+    <p-table [value]="registros" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+            <!--  -->
+            <tr>
+                <th style="width: 5%;">CUESTIONARIO</th>
+                <th style="width: 70%;">VARIABLE</th>
+                <th style="width: 5%;">TOTAL</th>
+                <th style="width: 10%;">ACCIONES</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-reg>
+            <tr [pSelectableRow]="reg">
+                <td>
+                    <span class="p-column-title">CUESTIONARIO</span>
+                    <span class="image-text">{{reg.cuestionario}}</span>
+                </td>
+
+                <td>
+                    <span class="p-column-title">VARIABLE</span>
+                    <span class="image-text"><strong></strong>
+                        <div *ngIf="reg.cuestionario=='UPA'"><p-chip label="{{reg.nro_preg}}" styleClass="mr-2 ml-2 custom-chip-upa"></p-chip>{{reg.variable}}</div> 
+                        <div *ngIf="reg.cuestionario=='COMUNAL'"><p-chip label="{{reg.nro_preg}}" styleClass="mr-2 ml-2 custom-chip-comunal"></p-chip>{{reg.variable}}</div>
+                    </span>
+                        
+                </td>
+
+                <td>
+                    <span class="p-column-title">TOTAL</span>
+                    <span class="image-text">{{reg.total_carga}}</span>
+                </td>
+
+                <td>
+                    <span class="p-column-title">ACCIONES</span>
+
+                    <button [disabled]="tabla_pb" pButton pRipple label="Codificar" icon="pi pi-check" class="p-button-info mr-2"
+                        *ngIf="reg.total_carga>0 && reg.nro_preg!=='49-51'" pTooltip="Codificar" tooltipPosition="left"
+                        (click)="codificacionSimple(reg)">
+                    </button>
+
+                    <button [disabled]="tabla_pb" pButton pRipple label="Codificar" icon="pi pi-check" class="p-button-primary mr-2"
+                        *ngIf="reg.total_carga>0 && reg.nro_preg=='49-51'" pTooltip="Codificar" tooltipPosition="left"
+                        (click)="codificacionDoble(reg)">
+                    </button>
+
+                    <button [disabled]="tabla_pb" pButton pRipple label="Codificar" icon="pi pi-check"
+                        class="p-button-outlined p-button-secondary mr-2" disabled *ngIf="reg.total_carga==0">
+                    </button>
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="4">No hay registros para mostrar</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+            <!-- <p-button type="button" icon="pi pi-refresh" styleClass="p-button-text" label="Actualizar"
+                pTooltip="Click para actualizar la tabla"></p-button> -->
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+        </ng-template>
+    </p-table>
+
+</div>
+<br>
